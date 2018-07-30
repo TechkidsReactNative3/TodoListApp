@@ -5,16 +5,27 @@ import {
 } from 'react-native';
 import RoundCheckbox from 'rn-round-checkbox';
 
-import { gray, categoryBirthday, white } from '../styles'
+import { gray, white, calendarHighlight } from '../styles'
+import { chooseColorByCategory } from '../utils'
 
 class ItemTask extends Component {
-  state = {}
+  state = {
+    taskDone: false
+  }
+
+  toogleTask = newValue => this.setState({ taskDone: newValue })
+
   render() {
     return (
       <View style={styles.container}>
-        <RoundCheckbox />
+        <RoundCheckbox
+          checked={this.state.taskDone}
+          onValueChange={this.toogleTask}
+          backgroundColor={calendarHighlight}
+        />
         <Text style={styles.time}>{this.props.task.time}</Text>
-        <TouchableOpacity style={styles.task}>
+        <TouchableOpacity
+          style={[{ backgroundColor: chooseColorByCategory(this.props.task.category) }, styles.task]}>
           <Text style={styles.content}>{this.props.task.content}</Text>
           <Text style={styles.category}>{this.props.task.category}</Text>
         </TouchableOpacity>
@@ -36,7 +47,6 @@ const styles = StyleSheet.create({
     width: 40
   },
   task: {
-    backgroundColor: categoryBirthday,
     borderRadius: 10,
     padding: 15,
     marginStart: 20,
