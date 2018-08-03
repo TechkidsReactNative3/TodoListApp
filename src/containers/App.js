@@ -3,11 +3,17 @@ import {
   Text,
   View, TouchableOpacity, Image
 } from 'react-native';
-
 import { createStackNavigator } from 'react-navigation'
+
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+
 import ScheduleScreen from './ScheduleScreen';
 import AddTaskScreen from './AddTaskScreen';
 import { gray, white, calendarHighlight } from '../styles'
+import rootReducer from '../reducers'
+
+const store = createStore(rootReducer)
 
 const Navigation = createStackNavigator({
   Schedule: {
@@ -45,12 +51,13 @@ const Navigation = createStackNavigator({
         </TouchableOpacity>,
       headerRight:
         <TouchableOpacity
-          onPress={() => navigation.navigate('Schedule')}>
-          <Text style={{ 
-            marginEnd: 10, 
-            fontWeight: 'bold', 
-            fontSize: 18, 
-            color: calendarHighlight }}>Done</Text>
+          onPress={navigation.getParam('addTask')}>
+          <Text style={{
+            marginEnd: 10,
+            fontWeight: 'bold',
+            fontSize: 18,
+            color: calendarHighlight
+          }}>Done</Text>
         </TouchableOpacity>,
       headerTitleStyle: {
         fontSize: 22,
@@ -69,7 +76,9 @@ class App extends Component {
   state = {}
   render() {
     return (
-      <Navigation />
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
     );
   }
 }

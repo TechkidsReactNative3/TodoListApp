@@ -25,7 +25,8 @@ class ItemTask extends Component {
         />
         <Text style={styles.time}>{this.props.task.time}</Text>
         <TouchableOpacity
-          style={[{ backgroundColor: chooseColorByCategory(this.props.task.category) }, styles.task]}>
+          style={[{ backgroundColor: chooseColorByCategory(this.props.task.category) }, 
+          styles.task]}>
           <Text style={styles.content}>{this.props.task.content}</Text>
           <Text style={styles.category}>{this.props.task.category}</Text>
         </TouchableOpacity>

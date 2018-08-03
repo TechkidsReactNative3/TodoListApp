@@ -4,6 +4,7 @@ import {
   View, StyleSheet, SectionList
 } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip'
+import { connect } from 'react-redux'
 
 import { white, calendarBackground, calendarHighlight, commonStyles } from '../styles';
 import ItemDate from '../components/ItemDate';
@@ -14,9 +15,9 @@ class ScheduleScreen extends Component {
   state = {
   }
 
-  renderItem = ({item}) => <ItemTask task={item}/>
+  renderItem = ({ item }) => <ItemTask task={item} />
 
-  renderSectionHeader = ({section: { date }}) => <ItemDate date={date}/>
+  renderSectionHeader = ({ section: { date } }) => <ItemDate date={date} />
 
   render() {
     return (
@@ -30,7 +31,7 @@ class ScheduleScreen extends Component {
         <SectionList
           renderItem={this.renderItem}
           renderSectionHeader={this.renderSectionHeader}
-          sections={data}
+          sections={this.props.tasks}
           keyExtractor={(item) => item.id}
         />
       </View>
@@ -38,4 +39,7 @@ class ScheduleScreen extends Component {
   }
 }
 
-export default ScheduleScreen;
+const mapStateToProps = ({ tasks }) => ({ tasks })
+
+//connect(state, action)
+export default connect(mapStateToProps)(ScheduleScreen);
