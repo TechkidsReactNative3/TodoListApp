@@ -4,17 +4,16 @@ import {
   View, TouchableOpacity, Image
 } from 'react-native';
 import { createStackNavigator } from 'react-navigation'
-
+import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
 
 import ScheduleScreen from './ScheduleScreen';
 import AddTaskScreen from './AddTaskScreen';
 import { gray, white, calendarHighlight } from '../styles'
-import rootReducer from '../reducers'
 
-const store = createStore(rootReducer)
+import configureStore from '../configureStore'
 
+const configure = configureStore()
 const Navigation = createStackNavigator({
   Schedule: {
     screen: ScheduleScreen,
@@ -76,8 +75,10 @@ class App extends Component {
   state = {}
   render() {
     return (
-      <Provider store={store}>
-        <Navigation />
+      <Provider store={configure.store}>
+        <PersistGate loading={null} persistor={configure.persistor}>
+          <Navigation />
+        </PersistGate>
       </Provider>
     );
   }

@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 import { gray, white, calendarHighlight } from '../styles'
 import { chooseColorByCategory } from '../utils'
-import { toogleTask } from '../actions'
+import { toogleTask, delTask } from '../actions'
 
 class ItemTask extends Component {
   state = {
@@ -24,6 +24,13 @@ class ItemTask extends Component {
     })
   }
 
+  delTask = () => {
+    this.props.delTask({
+      id: this.props.dayId,
+      timeId: this.props.task.id,
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -34,6 +41,7 @@ class ItemTask extends Component {
         />
         <Text style={styles.time}>{this.props.task.time}</Text>
         <TouchableOpacity
+          onLongPress={this.delTask}
           style={[{ backgroundColor: chooseColorByCategory(this.props.task.category) },
           styles.task]}>
           <Text style={styles.content}>{this.props.task.content}</Text>
@@ -75,4 +83,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(null, { toogleTask })(ItemTask);
+export default connect(null, { toogleTask, delTask })(ItemTask);
